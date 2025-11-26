@@ -1,14 +1,19 @@
 <script lang="ts">
-  import type { TodoItem } from "./types";
+    import type { TodoItem } from "./types";
+    interface Props extends TodoItem {
+        ondelete: (t: string, d: string) => void
+    }
+    const { title, description, ondelete }: Props = $props();
 
-  const { title, description }: TodoItem = $props();
+    
 </script>
 
 <div class="todo">
   <div class="todo-details">
     <p class="todo-title">{title}</p>
     <p class="todo-description">{description}</p>
-  </div>
+    </div>
+    <button on:click={() => ondelete(title, description)}>Delete</button> 
 </div>
 
 <style>

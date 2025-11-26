@@ -1,13 +1,17 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 func main() {
-	// Your code here
-}
+	storage := SetupStorage()
+	server := SetupServer(*storage)
+	router := http.NewServeMux()
 
-func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	router.HandleFunc("/", server.HandleTodo)
 
-	// Your code here
+	fmt.Println("Server listening on port 8080")
+	http.ListenAndServe(":8080", router)
 }
